@@ -24,8 +24,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+	Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboard'])->name('dashboard');
+	Route::get('/me', [\App\Http\Controllers\DashboardController::class, 'me'])->name('me');
+});
+
+
 
 require __DIR__.'/auth.php';
